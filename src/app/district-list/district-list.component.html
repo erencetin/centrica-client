@@ -1,0 +1,47 @@
+<div class="accordion" id="accordionExample">
+  <ng-container *ngFor="let district of districts; let i = index">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ i }}">
+        <button
+          class="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          [attr.data-bs-target]="'#collapse' + i"
+          aria-expanded="true"
+        >
+          {{ district.name }}
+        </button>
+      </h2>
+      <div
+        [id]="'collapse' + i"
+        class="accordion-collapse collapse show"
+        [attr.aria-labelledby]="'heading' + i"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body">
+          <!-- Display Salespersons -->
+          <h4>Salespersons:</h4>
+          <ul>
+            <li *ngFor="let salesperson of district.salespersons">
+              <ng-container *ngIf="salesperson.isPrimary; else elseTemplate">
+                <b>{{ salesperson.firstName }} {{ salesperson.lastName }} (Primary)</b>
+              </ng-container>
+              <ng-template #elseTemplate>
+                {{ salesperson.firstName }} {{ salesperson.lastName }}
+              </ng-template>
+              
+            </li>
+          </ul>
+
+          <!-- Display Stores -->
+          <h4>Stores:</h4>
+          <ul>
+            <li *ngFor="let store of district.stores">
+              {{ store.name }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
